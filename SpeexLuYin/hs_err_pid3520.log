@@ -1,0 +1,108 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (classFileParser.cpp:3375), pid=3520, tid=3676
+#  Error: ShouldNotReachHere()
+#
+# JRE version: 6.0_23-b05
+# Java VM: Java HotSpot(TM) Client VM (19.0-b09 mixed mode windows-x86 )
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x01811400):  JavaThread "Unknown thread" [_thread_in_vm, id=3676, stack(0x00330000,0x00380000)]
+
+Stack: [0x00330000,0x00380000],  sp=0x0037f878,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x200a27]
+V  [jvm.dll+0xa536b]
+V  [jvm.dll+0x761e8]
+V  [jvm.dll+0x779ef]
+V  [jvm.dll+0x1cfdc5]
+V  [jvm.dll+0x1d069d]
+V  [jvm.dll+0x1d0a65]
+V  [jvm.dll+0x1d0aab]
+V  [jvm.dll+0x1d0bd2]
+V  [jvm.dll+0x1d0c4a]
+V  [jvm.dll+0x1d0d2d]
+V  [jvm.dll+0x1d0fd2]
+V  [jvm.dll+0x1f0783]
+V  [jvm.dll+0x1f0b5c]
+V  [jvm.dll+0xdbd3c]
+V  [jvm.dll+0x1e9c28]
+V  [jvm.dll+0x106190]
+C  [javaw.exe+0x1657]
+C  [javaw.exe+0x1e2c]
+C  [javaw.exe+0x8614]
+C  [kernel32.dll+0x51114]
+C  [ntdll.dll+0x5b299]
+C  [ntdll.dll+0x5b26c]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x01811400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=3676, stack(0x00330000,0x00380000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	D:\Tools\Java\jre6\bin\javaw.exe
+0x772b0000 - 0x773ec000 	C:\Windows\SYSTEM32\ntdll.dll
+0x75d60000 - 0x75e34000 	C:\Windows\system32\kernel32.dll
+0x75660000 - 0x756aa000 	C:\Windows\system32\KERNELBASE.dll
+0x75f10000 - 0x75fb0000 	C:\Windows\system32\ADVAPI32.dll
+0x760a0000 - 0x7614c000 	C:\Windows\system32\msvcrt.dll
+0x76410000 - 0x76429000 	C:\Windows\SYSTEM32\sechost.dll
+0x75cb0000 - 0x75d51000 	C:\Windows\system32\RPCRT4.dll
+0x764c0000 - 0x76589000 	C:\Windows\system32\USER32.dll
+0x76590000 - 0x765de000 	C:\Windows\system32\GDI32.dll
+0x75a00000 - 0x75a0a000 	C:\Windows\system32\LPK.dll
+0x75700000 - 0x7579d000 	C:\Windows\system32\USP10.dll
+0x763f0000 - 0x7640f000 	C:\Windows\system32\IMM32.DLL
+0x75e40000 - 0x75f0c000 	C:\Windows\system32\MSCTF.dll
+0x7c340000 - 0x7c396000 	D:\Tools\Java\jre6\bin\msvcr71.dll
+0x6d7f0000 - 0x6da9c000 	D:\Tools\Java\jre6\bin\client\jvm.dll
+0x73920000 - 0x73952000 	C:\Windows\system32\WINMM.dll
+0x75330000 - 0x7537b000 	C:\Windows\system32\apphelp.dll
+0x6d7a0000 - 0x6d7ac000 	D:\Tools\Java\jre6\bin\verify.dll
+0x6d320000 - 0x6d33f000 	D:\Tools\Java\jre6\bin\java.dll
+0x6d280000 - 0x6d288000 	D:\Tools\Java\jre6\bin\hpi.dll
+0x773f0000 - 0x773f5000 	C:\Windows\system32\PSAPI.DLL
+0x6d7e0000 - 0x6d7ef000 	D:\Tools\Java\jre6\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=GBK -Xbootclasspath:D:\Tools\Android\SDK\android-sdk-windows\platforms\android-7\android.jar 
+java_command: com.yangyueyue.demo.luyin.Test
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=D:\Tools\Java\jdk1.6.0_23
+CLASSPATH=.;D:\Tools\Java\jdk1.6.0_23\lib;D:\Tools\Java\jdk1.6.0_23\lib\dt.jar;D:\Tools\Java\jdk1.6.0_23\lib\tools.jar;
+PATH=D:/Tools/Java/jre6/bin/client;D:/Tools/Java/jre6/bin;D:/Tools/Java/jre6/lib/i386;JAVA_HOME\bin;c:\gtk\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;F:\Tools\SVN\bin;C:\Program Files\SSH Communications Security\SSH Secure Shell;;D:\Tools\eclipse-jee-helios-SR2-win32\eclipse;
+USERNAME=yyy
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 15 Model 79 Stepping 2, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7600 
+
+CPU:total 1 (1 cores per cpu, 1 threads per core) family 15 model 79 stepping 2, cmov, cx8, fxsr, mmx, sse, sse2, sse3, mmxext, 3dnow, 3dnowext
+
+Memory: 4k page, physical 1572400k(244440k free), swap 3144800k(938780k free)
+
+vm_info: Java HotSpot(TM) Client VM (19.0-b09) for windows-x86 JRE (1.6.0_23-b05), built on Nov 12 2010 15:00:43 by "java_re" with MS VC++ 7.1 (VS2003)
+
+time: Tue Apr 17 15:52:07 2012
+elapsed time: 0 seconds
+
