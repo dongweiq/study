@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.base.app.BaseActivity" >
+
+    <ImageView
+        android:id="@+id/imageView_add_locker"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/textView_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击图片设置储物柜默认图片" />
+
+    <EditText
+        android:id="@+id/editText_lockerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入储物柜的名字" >
+    </EditText>
+
+</LinearLayout>

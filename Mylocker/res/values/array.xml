@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <string-array name="choosePic">
+        <item>拍照</item>
+        <item>相册</item>
+    </string-array>
+
+</resources>

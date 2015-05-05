@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_contenner"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/Relayout_titleact"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="@color/nav.bg" >
+
+        <!-- 左侧图标 -->
+
+        <RelativeLayout
+            android:id="@+id/rv_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:minWidth="45dip" >
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="40dip"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@drawable/btn_title_backnew" />
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:gravity="center"
+                android:paddingLeft="5dip"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+        <!-- 右侧图标 -->
+
+        <RelativeLayout
+            android:id="@+id/rv_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:minWidth="45dip" >
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="60dip"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip" />
+        </RelativeLayout>
+        <!-- 标题 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="80dip"
+            android:paddingRight="80dip" >
+
+            <TextView
+                android:id="@+id/title_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="5dip"
+                android:ellipsize="middle"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_fileinfo"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@id/title_textview"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
