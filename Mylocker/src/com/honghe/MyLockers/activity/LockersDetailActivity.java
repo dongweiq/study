@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
+import com.base.utils.LogUtil;
 import com.honghe.R;
 import com.honghe.MyLockers.TitleActivity;
 import com.honghe.MyLockers.adapter.LockersDetailAdapter;
@@ -19,6 +20,7 @@ public class LockersDetailActivity extends TitleActivity implements OnClickListe
 	private GridView gridView_lockers_detail;
 	private ArrayList<LockersDetailBean> beans = new ArrayList<LockersDetailBean>();
 	private LockersDetailAdapter lockersDetailAdapter;
+	private String belongsId;
 
 	@Override
 	protected void initView() {
@@ -29,6 +31,9 @@ public class LockersDetailActivity extends TitleActivity implements OnClickListe
 
 	@Override
 	protected void initData() {
+		if (null != getIntent()) {
+			belongsId = getIntent().getStringExtra("id");
+		}
 		lockersDetailAdapter = new LockersDetailAdapter(this);
 		gridView_lockers_detail.setAdapter(lockersDetailAdapter);
 		lockersDetailAdapter.setDatas(beans);
@@ -40,7 +45,7 @@ public class LockersDetailActivity extends TitleActivity implements OnClickListe
 	 */
 	private void getLockerDetails() {
 		beans.clear();
-		beans.addAll(DBUtil.getAllLockersDetailBean(this));
+		beans.addAll(DBUtil.getAllLockersDetailBean(this,belongsId));
 		lockersDetailAdapter.setDatas(beans);
 	}
 
@@ -75,6 +80,7 @@ public class LockersDetailActivity extends TitleActivity implements OnClickListe
 			} else {
 				//添加物品
 				intent = new Intent(LockersDetailActivity.this, AddLockerDetailActivity.class);
+				intent.putExtra("id", belongsId);
 				startActivityForResult(intent, 1);
 			}
 		}

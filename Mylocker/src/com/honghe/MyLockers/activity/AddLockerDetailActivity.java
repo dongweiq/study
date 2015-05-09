@@ -28,12 +28,14 @@ import com.honghe.MyLockers.db.DBUtil;
 import com.honghe.MyLockers.util.ConsUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class AddLockerDetailActivity extends TitleActivity implements OnClickListener {
+public class AddLockerDetailActivity extends TitleActivity implements
+		OnClickListener {
 	private ImageView imageView_add_locker;
 	private EditText editText_lockerName;
 	private Dialog dialog;
 	private String cameraPicName;
 	private LockersDetailBean bean = new LockersDetailBean();
+	private String belongsId;
 
 	@Override
 	protected void initView() {
@@ -50,7 +52,9 @@ public class AddLockerDetailActivity extends TitleActivity implements OnClickLis
 
 	@Override
 	protected void initData() {
-
+		if (null != getIntent()) {
+			belongsId = getIntent().getStringExtra("id");
+		}
 	}
 
 	@Override
@@ -67,11 +71,11 @@ public class AddLockerDetailActivity extends TitleActivity implements OnClickLis
 			finish();
 			break;
 		case R.id.rv_title_right:
-			//保存
+			// 保存
 			saveLockerDetail();
 			break;
 		case R.id.imageView_add_locker:
-			//修改图片
+			// 修改图片
 			dialog.show();
 			break;
 
@@ -89,6 +93,7 @@ public class AddLockerDetailActivity extends TitleActivity implements OnClickLis
 		if (null != picPath && !TextUtils.isEmpty(name)) {
 			bean.LockersDetailName = name;
 			bean.lockerdetailsid = System.currentTimeMillis() + "";
+			bean.BelongsLockersId = belongsId;
 			try {
 				DBUtil.addLockersDetailBean(this, bean);
 				setResult(RESULT_OK);
@@ -104,7 +109,8 @@ public class AddLockerDetailActivity extends TitleActivity implements OnClickLis
 		}
 	}
 
-	private class DialogClickListener implements DialogInterface.OnClickListener {
+	private class DialogClickListener implements
+			DialogInterface.OnClickListener {
 		Intent intent;
 
 		@Override
@@ -138,28 +144,33 @@ public class AddLockerDetailActivity extends TitleActivity implements OnClickLis
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 0) {
-			//从相机返回
+			// 从相机返回
 			File picFile = new File(ConsUtil.picPath + cameraPicName);
 			if (picFile.exists()) {
-				ImageLoader.getInstance().displayImage("file://" + Uri.fromFile(picFile).getPath(), imageView_add_locker);
+				ImageLoader.getInstance().displayImage(
+						"file://" + Uri.fromFile(picFile).getPath(),
+						imageView_add_locker);
 				bean.ImageUri = picFile.getPath();
 			}
 		} else if (requestCode == 1) {
-			//从相册返回
+			// 从相册返回
 			if (resultCode == RESULT_OK) {
-				//外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
+				// 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
 				ContentResolver resolver = getContentResolver();
-				Uri originalUri = data.getData(); //获得图片的uri 
+				Uri originalUri = data.getData(); // 获得图片的uri
 				String[] proj = { MediaStore.Images.Media.DATA };
-				//好像是android多媒体数据库的封装接口，具体的看Android文档
-				Cursor cursor = managedQuery(originalUri, proj, null, null, null);
-				//按我个人理解 这个是获得用户选择的图片的索引值
-				int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-				//将光标移至开头 ，这个很重要，不小心很容易引起越界
+				// 好像是android多媒体数据库的封装接口，具体的看Android文档
+				Cursor cursor = managedQuery(originalUri, proj, null, null,
+						null);
+				// 按我个人理解 这个是获得用户选择的图片的索引值
+				int column_index = cursor
+						.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+				// 将光标移至开头 ，这个很重要，不小心很容易引起越界
 				cursor.moveToFirst();
-				//最后根据索引值获取图片路径
+				// 最后根据索引值获取图片路径
 				String path = cursor.getString(column_index);
-				ImageLoader.getInstance().displayImage("file://" + path, imageView_add_locker);
+				ImageLoader.getInstance().displayImage("file://" + path,
+						imageView_add_locker);
 				bean.ImageUri = path;
 			} else {
 				Toast.makeText(this, "请重新选择图片", Toast.LENGTH_SHORT).show();

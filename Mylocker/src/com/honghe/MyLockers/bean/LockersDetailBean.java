@@ -16,6 +16,8 @@ public class LockersDetailBean extends BaseBean<LockersDetailBean> {
 	public String ImageUri;
 	@TableColumn(type = TableColumn.Types.TEXT)
 	public String LockersDetailName;
+	@TableColumn(type = TableColumn.Types.TEXT)
+	public String BelongsLockersId;
 
 	@Override
 	public LockersDetailBean parseJSON(JSONObject jsonObj) {
@@ -31,10 +33,13 @@ public class LockersDetailBean extends BaseBean<LockersDetailBean> {
 
 	@Override
 	public LockersDetailBean cursorToBean(Cursor cursor) {
-		lockerdetailsid = cursor.getString(cursor.getColumnIndex("lockerdetailsid"));
+		lockerdetailsid = cursor.getString(cursor
+				.getColumnIndex("lockerdetailsid"));
 		ImageUri = cursor.getString(cursor.getColumnIndex("ImageUri"));
-		LockersDetailName = cursor.getString(cursor.getColumnIndex("LockersDetailName"));
-
+		LockersDetailName = cursor.getString(cursor
+				.getColumnIndex("LockersDetailName"));
+		BelongsLockersId = cursor.getString(cursor
+				.getColumnIndex("BelongsLockersId"));
 		return this;
 	}
 
@@ -44,11 +49,14 @@ public class LockersDetailBean extends BaseBean<LockersDetailBean> {
 		values.put("lockerdetailsid", lockerdetailsid);
 		values.put("ImageUri", ImageUri);
 		values.put("LockersDetailName", LockersDetailName);
+		values.put("BelongsLockersId", BelongsLockersId);
 		return values;
 	}
 
 	public String toString() {
-		return "lockersid" + lockerdetailsid + "\n ImageUri" + ImageUri + "\n LockersDetailName" + LockersDetailName;
+		return "lockersid" + lockerdetailsid + "\n ImageUri" + ImageUri
+				+ "\n LockersDetailName" + LockersDetailName
+				+ "\n BelongsLockersId" + BelongsLockersId;
 
 	}
 
