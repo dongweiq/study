@@ -5,5 +5,9 @@
         <item>拍照</item>
         <item>相册</item>
     </string-array>
+    <string-array name="edit">
+        <item>编辑</item>
+        <item>删除</item>
+    </string-array>
 
 </resources>

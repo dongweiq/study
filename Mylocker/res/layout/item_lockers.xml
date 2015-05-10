@@ -9,6 +9,7 @@
         android:layout_height="130dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="20dp"
+        android:src="@drawable/imageposition"
         android:scaleType="centerInside" />
 
     <TextView

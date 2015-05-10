@@ -28,6 +28,9 @@ public class ConsUtil {
 	
 	public static String LockerDetailAdd="1";
 	public static String LockerDetailEdit="2";
+	
+	public static String LockerAdd="1";
+	public static String LockerEdit="2";
 
 	public static void createAppDir(Context context) {
 		// 创建应用文件夹

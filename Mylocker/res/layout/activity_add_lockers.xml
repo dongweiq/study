@@ -15,13 +15,13 @@
         android:id="@+id/textView_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="点击图片设置储物柜默认图片" />
+        android:text="点击图片设置物品图片" />
 
     <EditText
         android:id="@+id/editText_lockerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入储物柜的名字" >
+        android:hint="请输入物品的名字" >
     </EditText>
 
 </LinearLayout>
