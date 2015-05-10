@@ -6,8 +6,9 @@
     <ImageView
         android:id="@+id/imageView_lockers"
         android:layout_width="120dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
+        android:layout_height="130dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
         android:scaleType="centerInside" />
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="center"
+        android:layout_marginBottom="3dp"
         android:text="储藏柜1" />
 
 </FrameLayout>

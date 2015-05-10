@@ -25,6 +25,9 @@ public class ConsUtil {
 	public static String logPath = appPath + "/log";
 	public static String cachePath = appPath + "/cache";
 	public static DisplayImageOptions options;
+	
+	public static String LockerDetailAdd="1";
+	public static String LockerDetailEdit="2";
 
 	public static void createAppDir(Context context) {
 		// 创建应用文件夹

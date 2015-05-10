@@ -75,14 +75,15 @@ public class LockersDetailActivity extends TitleActivity implements OnClickListe
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			if (beans != null && position < beans.size()) {
 				//打开物品
-				//				intent = new Intent(LockersDetailActivity.this, AddLockerDetailActivity.class);
-				//				intent.putExtra("id", beans.get(position).lockerdetailsid);
+				intent = new Intent(LockersDetailActivity.this,
+						AddLockerDetailActivity.class);
+				intent.putExtra("detailId", beans.get(position).lockerdetailsid);
 			} else {
 				//添加物品
 				intent = new Intent(LockersDetailActivity.this, AddLockerDetailActivity.class);
 				intent.putExtra("id", belongsId);
-				startActivityForResult(intent, 1);
 			}
+			startActivityForResult(intent, 1);
 		}
 
 	}

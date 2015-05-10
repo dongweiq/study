@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.base.utils.LogUtil;
 import com.base.utils.T;
+import com.base.view.common.ToastAlone;
 import com.honghe.R;
 import com.honghe.MyLockers.TitleActivity;
 import com.honghe.MyLockers.bean.LockersBean;
@@ -36,25 +37,52 @@ public class AddLockerDetailActivity extends TitleActivity implements
 	private String cameraPicName;
 	private LockersDetailBean bean = new LockersDetailBean();
 	private String belongsId;
+	private String detailId;
+	private String EditType = ConsUtil.LockerDetailAdd;
 
 	@Override
 	protected void initView() {
 		addView(View.inflate(this, R.layout.activity_add_lockers, null));
-		setTitle("添加物品");
-		tvRight.setText("保存");
 		imageView_add_locker = (ImageView) findViewById(R.id.imageView_add_locker);
 		editText_lockerName = (EditText) findViewById(R.id.editText_lockerName);
 		Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("选择照片");
 		builder.setItems(R.array.choosePic, new DialogClickListener());
 		dialog = builder.create();
+		imageView_add_locker.setImageResource(R.drawable.imageposition);
 	}
 
 	@Override
 	protected void initData() {
 		if (null != getIntent()) {
 			belongsId = getIntent().getStringExtra("id");
+			detailId = getIntent().getStringExtra("detailId");
 		}
+		if (null != belongsId) {
+			EditType = ConsUtil.LockerDetailAdd;
+			setTitle("添加物品");
+			tvRight.setText("添加");
+		} else if (null != detailId) {
+			EditType = ConsUtil.LockerDetailEdit;
+			setTitle("修改物品");
+			tvRight.setText("保存");
+			getLockerDetail();
+		}
+	}
+
+	/**
+	 * 获取物品详情
+	 */
+	private void getLockerDetail() {
+		bean = DBUtil.getLockersDetailBean(this, detailId);
+		if (null != bean) {
+			ImageLoader.getInstance().displayImage("file://" + bean.ImageUri,
+					imageView_add_locker);
+			editText_lockerName.setText(bean.LockersDetailName);
+		} else {
+			T.showLong(this, "获取物品详情失败！");
+		}
+
 	}
 
 	@Override
@@ -72,7 +100,11 @@ public class AddLockerDetailActivity extends TitleActivity implements
 			break;
 		case R.id.rv_title_right:
 			// 保存
-			saveLockerDetail();
+			if (EditType.equals(ConsUtil.LockerDetailAdd)) {
+				addLockerDetail();
+			} else if (EditType.equals(ConsUtil.LockerDetailEdit)) {
+				editLockerDetail();
+			}
 			break;
 		case R.id.imageView_add_locker:
 			// 修改图片
@@ -85,9 +117,9 @@ public class AddLockerDetailActivity extends TitleActivity implements
 	}
 
 	/**
-	 * 保存物品
+	 * 添加物品
 	 */
-	private void saveLockerDetail() {
+	private void addLockerDetail() {
 		String picPath = bean.ImageUri;
 		String name = editText_lockerName.getText().toString().trim();
 		if (null != picPath && !TextUtils.isEmpty(name)) {
@@ -102,6 +134,34 @@ public class AddLockerDetailActivity extends TitleActivity implements
 			} catch (Exception e) {
 				T.showLong(this, "添加物品失败！");
 				LogUtil.e("增加物品失败！");
+				e.printStackTrace();
+			}
+		} else {
+			T.showLong(this, "未选择图片或名称不能为空");
+		}
+	}
+
+	/**
+	 * 保存物品修改
+	 */
+	private void editLockerDetail() {
+		String picPath = bean.ImageUri;
+		String name = editText_lockerName.getText().toString().trim();
+		if (null != picPath && !TextUtils.isEmpty(name)) {
+			bean.LockersDetailName = name;
+			try {
+				int isSucess= DBUtil.updateLockersDetailBean(this, bean);
+				if (isSucess==0) {
+					T.showLong(this, "修改物品失败！");
+					LogUtil.e("修改物品失败！");
+				}else {
+					T.showLong(this, "修改物品成功！");
+					setResult(RESULT_OK);
+					finish();
+				}
+			} catch (Exception e) {
+				T.showLong(this, "修改物品失败！");
+				LogUtil.e("修改物品失败！");
 				e.printStackTrace();
 			}
 		} else {

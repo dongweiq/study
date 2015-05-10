@@ -45,6 +45,7 @@ public class AddLockersActivity extends TitleActivity implements OnClickListener
 		builder.setTitle("选择照片");
 		builder.setItems(R.array.choosePic, new DialogClickListener());
 		dialog = builder.create();
+		imageView_add_locker.setImageResource(R.drawable.imageposition);
 	}
 
 	@Override
