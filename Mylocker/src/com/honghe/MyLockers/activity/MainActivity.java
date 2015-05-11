@@ -25,6 +25,7 @@ import com.honghe.MyLockers.adapter.ClassificationAdapter;
 import com.honghe.MyLockers.adapter.LockersAdapter;
 import com.honghe.MyLockers.bean.ClassificationBean;
 import com.honghe.MyLockers.bean.LockersBean;
+import com.honghe.MyLockers.bean.LockersDetailBean;
 import com.honghe.MyLockers.db.DBUtil;
 import com.honghe.MyLockers.util.ConsUtil;
 
@@ -37,6 +38,7 @@ public class MainActivity extends TitleActivity implements OnClickListener {
 	private ArrayList<LockersBean> lockerBeans = new ArrayList<LockersBean>();
 	private ArrayList<ClassificationBean> classificationBeans = new ArrayList<ClassificationBean>();
 	private Dialog dialog;
+	private AlertDialog alertDialog;
 	private String lockersId;
 
 	@Override
@@ -71,6 +73,27 @@ public class MainActivity extends TitleActivity implements OnClickListener {
 		builder.setTitle("请选择要进行的操作");
 		builder.setItems(R.array.edit, new DialogClickListener());
 		dialog = builder.create();
+		Builder alertBuilder = new AlertDialog.Builder(this);
+		alertBuilder.setTitle("确定要删除？");
+		alertBuilder.setMessage("删除储物柜会连储物柜中的物品一同删除！");
+		alertBuilder.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						delLockers();
+						alertDialog.dismiss();
+					}
+				});
+		alertBuilder.setNegativeButton("取消",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						alertDialog.dismiss();
+					}
+				});
+		alertDialog = alertBuilder.create();
 	}
 
 	@Override
@@ -185,13 +208,15 @@ public class MainActivity extends TitleActivity implements OnClickListener {
 				dialog.dismiss();
 				break;
 			case 1:// 删除
-				int isSucess = DBUtil.delLockersBean(MainActivity.this,
-						lockersId);
-				if (isSucess == 0) {
-					T.showShort(MainActivity.this, "删除失败");
+				ArrayList<LockersDetailBean> beans = DBUtil
+						.getAllLockersDetailBean(MainActivity.this, lockersId);
+				int count = beans.size();
+				if (count > 0) {
+					alertDialog.setMessage("您的储物柜中还有" + count
+							+ "件物品，删除储物柜会将物品一同删除,确定删除？");
+					alertDialog.show();
 				} else {
-					T.showShort(MainActivity.this, "删除成功");
-					getLockers();
+					delLockers();
 				}
 				dialog.dismiss();
 				break;
@@ -201,6 +226,19 @@ public class MainActivity extends TitleActivity implements OnClickListener {
 			}
 		}
 
+	}
+
+	/**
+	 * 删除储物柜
+	 */
+	private void delLockers() {
+		int isSucess = DBUtil.delLockersBean(MainActivity.this, lockersId);
+		if (isSucess == 0) {
+			T.showShort(MainActivity.this, "删除失败");
+		} else {
+			T.showShort(MainActivity.this, "删除成功");
+			getLockers();
+		}
 	}
 
 	@Override
