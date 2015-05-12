@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Record</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">测试AudioRecord，实现录音功能</string>
+    <string name="menu_settings">Settings</string>
+    <string name="view_record_wav">录音WAV文件</string>
+    <string name="view_record_amr">录音AMR文件</string>
+    <string name="view_stop">停止录音</string>
+    <string name="error_no_sdcard">没有SD卡，无法存储录音数据</string>
+    <string name="error_state_record">正在录音中，请先停止录音</string>
+    <string name="error_unknown">无法识别的错误</string>
+
+</resources>
