@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, PDF_viewActivity!</string>
+    <string name="app_name">PDF_drm</string>
+
+</resources>
