@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+ 	<TextView  
+	android:id = "@+id/tvPlayState"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="MPS_UNINIT"
+    />
+    
+ 	<LinearLayout
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="fill_parent"
+ 	    android:orientation="horizontal" >
+    
+ 	     <Button  
+		    android:id = "@+id/buttonPlay"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="PLAY"
+		    android:layout_weight="1"
+		    />
+		    
+		 <Button  
+		    android:id = "@+id/buttonPause"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="PAUSE"
+		    android:layout_weight="1"
+		    />
+		      
+		<Button  
+		    android:id = "@+id/buttonStop"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:text="STOP"
+		    android:layout_weight="1"
+    		/>
+		    
+ 	</LinearLayout>
+    
+   
+    
+
+</LinearLayout>
