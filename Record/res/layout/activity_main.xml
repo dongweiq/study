@@ -16,11 +16,34 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_record_wav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wav录音" />
+
+        <Button
+            android:id="@+id/btn_play_wav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wav播放" />
+
+        <Button
+            android:id="@+id/btn_play_raw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="raw播放" />
+    </LinearLayout>
+
     <Button
-        android:id="@+id/btn_record_wav"
+        android:id="@+id/btn_record_wav2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="wav录音" />
+        android:text="wav录音2" />
 
     <Button
         android:id="@+id/btn_record_amr"
@@ -33,6 +56,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="停止录音" />
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    <Button
+        android:id="@+id/btn_wave_join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wave音频拼接" />
+    <Button
+        android:id="@+id/btn_wave_join_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wave音频拼接后播放" />
+</LinearLayout>
+    <Button
+        android:id="@+id/btn_wave2spx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拼接后的wave转spx" />
+
+    <Button
+        android:id="@+id/btn_spx2wave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="spx转回wave" />
+
+    <Button
+        android:id="@+id/btn_playspx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="播放转换后的wave" />
 
     <TextView
         android:id="@+id/text"

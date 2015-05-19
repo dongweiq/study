@@ -13,9 +13,9 @@ public class AudioFileFunc {
 	//44100是目前的标准，但是某些设备仍然支持22050，16000，11025
 	public final static int AUDIO_SAMPLE_RATE = 44100; //44.1KHz,普遍使用的频率   
 	//录音输出文件
-	private final static String AUDIO_RAW_FILENAME = "RawAudio.raw";
-	private final static String AUDIO_WAV_FILENAME = "FinalAudio.wav";
-	public final static String AUDIO_AMR_FILENAME = "FinalAudio.amr";
+	private  static String AUDIO_RAW_FILENAME = "RawAudio.raw";
+	private  static String AUDIO_WAV_FILENAME = "FinalAudio.wav";
+	public  static String AUDIO_AMR_FILENAME = "FinalAudio.amr";
 
 	/**
 	 * 判断是否有外部存储设备sdcard
@@ -41,6 +41,16 @@ public class AudioFileFunc {
 
 		return mAudioRawPath;
 	}
+	
+	public static void setRawFileName(String fileName) {
+		AUDIO_RAW_FILENAME = fileName;
+	}
+	public static void setWavFileName(String fileName) {
+		AUDIO_WAV_FILENAME = fileName;
+	}
+	public static void setAmrFileName(String fileName) {
+		AUDIO_AMR_FILENAME = fileName;
+	}
 
 	/**
 	 * 获取编码后的WAV格式音频文件路径
@@ -53,6 +63,19 @@ public class AudioFileFunc {
 			mAudioWavPath = fileBasePath + "/" + AUDIO_WAV_FILENAME;
 		}
 		return mAudioWavPath;
+	}
+
+	/**
+	 * 根据文件名获取文件的真是路径
+	 * @return
+	 */
+	public static String getFilePathByName(String fileName) {
+		String path = "";
+		if (isSdcardExit()) {
+			String fileBasePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+			path = fileBasePath + "/" + fileName;
+		}
+		return path;
 	}
 
 	/**
