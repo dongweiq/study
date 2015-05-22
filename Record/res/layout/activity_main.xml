@@ -109,11 +109,22 @@
         android:layout_height="wrap_content"
         android:text="播放转换后的wave" />
 
-    <Button
-        android:id="@+id/btn_record_spx"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="司信录制spx" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_record_spx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="司信录制spx" />
+
+        <Button
+            android:id="@+id/btn_sixin_show_wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示波形" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

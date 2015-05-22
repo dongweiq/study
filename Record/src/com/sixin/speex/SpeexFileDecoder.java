@@ -16,17 +16,15 @@ import android.util.Log;
 /**
  * 采用Jspeex方案，首先解包，从ogg里面接出来，然后使用speex decode将speex转为wav数据并进行播放
  * 
- * @author Gauss
+ * @author Honghe
  */
 public class SpeexFileDecoder {
 
 	protected Speex speexDecoder;
 	private String errmsg = null;
-	private boolean paused = false;
 	private List<ProgressListener> listenerList = new ArrayList<ProgressListener>();
 	private File srcPath;
 	private File dstPath;
-	private AudioTrack track;
 
 	public SpeexFileDecoder(File srcPath, File dstPath) throws Exception {
 		this.srcPath = srcPath;
@@ -34,27 +32,15 @@ public class SpeexFileDecoder {
 	}
 
 	private void initializeAndroidAudio(int sampleRate) throws Exception {
-		if (track != null) {
-			return;
-		}
 		int minBufferSize = AudioTrack.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
 		if (minBufferSize < 0) {
 			throw new Exception("Failed to get minimum buffer size: " + Integer.toString(minBufferSize));
 		}
-		track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, minBufferSize, AudioTrack.MODE_STREAM);
 	}
 
 	public void addOnMetadataListener(ProgressListener l) {
 		listenerList.add(l);
-	}
-
-	public synchronized void setPaused(boolean paused) {
-		this.paused = paused;
-	}
-
-	public synchronized boolean isPaused() {
-		return paused;
 	}
 
 	public String getErrmsg() {
@@ -88,16 +74,9 @@ public class SpeexFileDecoder {
 			while (true) {
 				if (Thread.interrupted()) {
 					dis.close();
-					track.stop();
-					track.release();
 					return;
 				}
 
-				while (this.isPaused()) {
-					track.stop();
-					track.release();
-					// Thread.sleep(100);
-				}
 				// read the OGG header
 				dis.readFully(header, 0, OGG_HEADERSIZE);
 				origchksum = readInt(header, 22);
@@ -125,15 +104,7 @@ public class SpeexFileDecoder {
 
 					if (Thread.interrupted()) {
 						dis.close();
-						track.stop();
-						track.release();
 						return;
-					}
-
-					while (this.isPaused()) {
-						track.stop();
-						track.release();
-						// Thread.sleep(100);
 					}
 
 					/* get the number of bytes in the segment */
@@ -161,11 +132,6 @@ public class SpeexFileDecoder {
 						/* get the amount of decoded data */
 						short[] decoded = new short[160];
 						if ((decsize = speexDecoder.decode(payload, decoded, 160)) > 0) {
-//							track.write(decoded, 0, decsize);
-//							float maxVol = AudioTrack.getMaxVolume();
-//							track.setStereoVolume(maxVol, maxVol);// 设置当前音量大小
-//							track.play();
-//							Log.e("test", track.getSampleRate()+"");
 							//把边解边播改为写文件
 							fos.write(ShortAndByte.shortArray2ByteArray(decoded), 0, decsize * 2);
 						}
@@ -176,15 +142,7 @@ public class SpeexFileDecoder {
 					throw new IOException("Ogg CheckSums do not match");
 			}
 		} catch (Exception e) {
-		} finally {
-			try {
-				if (null != track && track.getPlayState() != AudioTrack.PLAYSTATE_STOPPED) {
-					track.stop();
-					track.release();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
 		fos.close();
 		dis.close();

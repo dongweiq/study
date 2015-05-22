@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+import com.honghe.drawwav.DrawWaveActivity;
 import com.sixin.speex.OnSpeexFileCompletionListener;
 import com.sixin.speex.SpeexFileDecoder;
 import com.sixin.speex.SpeexFileDecoderHelper;
 import com.sixin.speex.SpeexTool;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -49,6 +51,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private Button btn_record_spx;
 	private Button btn_sixin_spx2wave;
 	private Button btn_sixin_wave_play;
+	private Button btn_sixin_show_wave;
 	private TextView txt;
 	private UIHandler uiHandler;
 	private UIThread uiThread;
@@ -83,6 +86,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_record_spx = (Button) this.findViewById(R.id.btn_record_spx);
 		btn_sixin_spx2wave = (Button) this.findViewById(R.id.btn_sixin_spx2wave);
 		btn_sixin_wave_play = (Button) this.findViewById(R.id.btn_sixin_wave_play);
+		btn_sixin_show_wave = (Button) this.findViewById(R.id.btn_sixin_show_wave);
 		txt = (TextView) this.findViewById(R.id.text);
 	}
 
@@ -103,6 +107,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		btn_record_spx.setOnClickListener(this);
 		btn_sixin_spx2wave.setOnClickListener(this);
 		btn_sixin_wave_play.setOnClickListener(this);
+		btn_sixin_show_wave.setOnClickListener(this);
 	}
 
 	private void init() {
@@ -379,6 +384,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			break;
 		case R.id.btn_sixin_wave_play:
 			mediaPlayerPlay(SpeexTool.dstName);
+			break;
+		case R.id.btn_sixin_show_wave:
+			startActivity(new Intent(MainActivity.this, DrawWaveActivity.class));
 			break;
 
 		default:

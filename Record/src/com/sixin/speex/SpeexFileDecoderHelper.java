@@ -8,7 +8,7 @@ import java.io.File;
 import android.os.Handler;
 
 /**
- * @author Gauss
+ * @author honghe
  * 
  */
 public class SpeexFileDecoderHelper {
