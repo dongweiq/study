@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 
  * @author Gauss
- * Ê¹ÓÃOGG·â×°²¢Ğ´ÎÄ¼ş
+ * ä½¿ç”¨OGGå°è£…å¹¶å†™æ–‡ä»¶
  *
  */
 public class SpeexWriter implements Runnable {
@@ -16,7 +16,7 @@ public class SpeexWriter implements Runnable {
 //	private Logger log = LoggerFactory.getLogger(SpeexWriter.class);
 	private final Object mutex = new Object();
 	
-	//Ğ´ÎÄ¼ş
+	//å†™æ–‡ä»¶
 	private SpeexWriteClient client = new SpeexWriteClient();
 	private volatile boolean isRecording;
 	private processedData pData;

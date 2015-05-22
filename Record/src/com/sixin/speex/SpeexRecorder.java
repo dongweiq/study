@@ -28,7 +28,7 @@ public class SpeexRecorder implements Runnable {
 
 	public void run() {
 	    
-		// Æô¶¯±àÂëÏß³Ì
+		// å¯åŠ¨ç¼–ç çº¿ç¨‹
 		SpeexEncoder encoder = new SpeexEncoder(this.fileName);
 		Thread encodeThread = new Thread(encoder);
 		encoder.setRecording(true);
@@ -46,7 +46,7 @@ public class SpeexRecorder implements Runnable {
 		android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
 
 		int bufferRead = 0;
-		//»º³å´óĞ¡
+		//ç¼“å†²å¤§å°
 		int bufferSize = AudioRecord.getMinBufferSize(frequency, AudioFormat.CHANNEL_IN_MONO, audioEncoding);
 		short[] tempBuffer = new short[bufferSize];
 		AudioRecord recordInstance = new AudioRecord(MediaRecorder.AudioSource.MIC, frequency, AudioFormat.CHANNEL_IN_MONO, audioEncoding,bufferSize);
@@ -57,9 +57,9 @@ public class SpeexRecorder implements Runnable {
 			bufferRead = recordInstance.read(tempBuffer, 0, packagesize);
 			// bufferRead = recordInstance.read(tempBuffer, 0, 320);
 			int v = 0;
-            // ½« buffer ÄÚÈİÈ¡³ö£¬½øĞĞÆ½·½ºÍÔËËã
+            // å°† buffer å†…å®¹å–å‡ºï¼Œè¿›è¡Œå¹³æ–¹å’Œè¿ç®—
             for (int i = 0; i < tempBuffer.length; i++) {
-                // ÕâÀïÃ»ÓĞ×öÔËËãµÄÓÅ»¯£¬ÎªÁË¸ü¼ÓÇåÎúµÄÕ¹Ê¾´úÂë
+                // è¿™é‡Œæ²¡æœ‰åšè¿ç®—çš„ä¼˜åŒ–ï¼Œä¸ºäº†æ›´åŠ æ¸…æ™°çš„å±•ç¤ºä»£ç 
                 v += tempBuffer[i] * tempBuffer[i];
             }
             if(bufferRead!=0){

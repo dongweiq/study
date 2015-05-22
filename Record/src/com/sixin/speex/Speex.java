@@ -1,6 +1,7 @@
+
 package com.sixin.speex;
 
-public class Speex {
+public class Speex  {
 
 	/* quality
 	 * 1 : 4kbps (very noticeable artifacts, usually intelligible)
@@ -10,18 +11,17 @@ public class Speex {
 	 * 8 : 15kbps (artifacts not usually noticeable)
 	 */
 	private static final int DEFAULT_COMPRESSION = 4;
-
-	//	private Logger log = LoggerFactory.getLogger(Speex.class);
+//	private Logger log = LoggerFactory.getLogger(Speex.class);
 
 	public Speex() {
 	}
 
 	public void init() {
-		load();
+		load();	
 		open(DEFAULT_COMPRESSION);
-		//		log.info("speex opened");		
+//		log.info("speex opened");		
 	}
-
+	
 	private void load() {
 		try {
 			System.loadLibrary("speex");
@@ -32,13 +32,9 @@ public class Speex {
 	}
 
 	public native int open(int compression);
-
 	public native int getFrameSize();
-
 	public native int decode(byte encoded[], short lin[], int size);
-
 	public native int encode(short lin[], int offset, byte encoded[], int size);
-
 	public native void close();
-
+	
 }

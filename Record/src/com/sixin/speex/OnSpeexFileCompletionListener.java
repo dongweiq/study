@@ -5,7 +5,7 @@ package com.sixin.speex;
  * @author shidongxue
  *
  */
-public interface OnSpeexCompletionListener {
-    void onCompletion(SpeexDecoder speexfiledecoder);
+public interface OnSpeexFileCompletionListener {
+    void onCompletion(SpeexFileDecoder speexdecoder);
     void onError(Exception ex);
 }

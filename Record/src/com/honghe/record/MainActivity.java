@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+import com.sixin.speex.OnSpeexFileCompletionListener;
+import com.sixin.speex.SpeexFileDecoder;
+import com.sixin.speex.SpeexFileDecoderHelper;
+import com.sixin.speex.SpeexTool;
+
 import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -18,17 +23,21 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	private final static int FLAG_WAV = 0;
 	private final static int FLAG_AMR = 1;
+	private final static int FLAG_SPX = 2;
 	private int mState = -1; //-1:没再录制，0：录制wav，1：录制amr
 	private Button btn_record_wav;
 	private Button btn_play_raw;
 	private Button btn_play_wav;
+	private Button btn_play_raw2;
+	private Button btn_play_wav2;
 	private Button btn_record_wav2;
 	private Button btn_record_amr;
 	private Button btn_stop;
@@ -37,6 +46,9 @@ public class MainActivity extends FragmentActivity {
 	private Button btn_wave2spx;
 	private Button btn_spx2wave;
 	private Button btn_playspx;
+	private Button btn_record_spx;
+	private Button btn_sixin_spx2wave;
+	private Button btn_sixin_wave_play;
 	private TextView txt;
 	private UIHandler uiHandler;
 	private UIThread uiThread;
@@ -58,6 +70,8 @@ public class MainActivity extends FragmentActivity {
 		btn_record_wav = (Button) this.findViewById(R.id.btn_record_wav);
 		btn_play_raw = (Button) this.findViewById(R.id.btn_play_raw);
 		btn_play_wav = (Button) this.findViewById(R.id.btn_play_wav);
+		btn_play_raw2 = (Button) this.findViewById(R.id.btn_play_raw2);
+		btn_play_wav2 = (Button) this.findViewById(R.id.btn_play_wav2);
 		btn_record_wav2 = (Button) this.findViewById(R.id.btn_record_wav2);
 		btn_record_amr = (Button) this.findViewById(R.id.btn_record_amr);
 		btn_stop = (Button) this.findViewById(R.id.btn_stop);
@@ -66,64 +80,36 @@ public class MainActivity extends FragmentActivity {
 		btn_wave2spx = (Button) this.findViewById(R.id.btn_wave2spx);
 		btn_spx2wave = (Button) this.findViewById(R.id.btn_spx2wave);
 		btn_playspx = (Button) this.findViewById(R.id.btn_playspx);
+		btn_record_spx = (Button) this.findViewById(R.id.btn_record_spx);
+		btn_sixin_spx2wave = (Button) this.findViewById(R.id.btn_sixin_spx2wave);
+		btn_sixin_wave_play = (Button) this.findViewById(R.id.btn_sixin_wave_play);
 		txt = (TextView) this.findViewById(R.id.text);
 	}
 
 	private void setListeners() {
-		btn_record_wav.setOnClickListener(btn_record_wav_clickListener);
-		btn_play_raw.setOnClickListener(btn_play_raw_clickListener);
-		btn_play_wav.setOnClickListener(btn_play_wav_clickListener);
-		btn_record_wav2.setOnClickListener(btn_record_wav_clickListener);
-		btn_record_amr.setOnClickListener(btn_record_amr_clickListener);
-		btn_stop.setOnClickListener(btn_stop_clickListener);
-		btn_wave_join.setOnClickListener(btn_join_clickListener);
-		btn_wave_join_play.setOnClickListener(btn_wave_join_play_clickListener);
-		btn_wave2spx.setOnClickListener(btn_wave2spx_clickListener);
-		btn_spx2wave.setOnClickListener(btn_spx2wave_clickListener);
-		btn_playspx.setOnClickListener(btn_playspx_clickListener);
+		btn_record_wav.setOnClickListener(this);
+		btn_play_raw.setOnClickListener(this);
+		btn_play_wav.setOnClickListener(this);
+		btn_play_raw2.setOnClickListener(this);
+		btn_play_wav2.setOnClickListener(this);
+		btn_record_wav2.setOnClickListener(this);
+		btn_record_amr.setOnClickListener(this);
+		btn_stop.setOnClickListener(this);
+		btn_wave_join.setOnClickListener(this);
+		btn_wave_join_play.setOnClickListener(this);
+		btn_wave2spx.setOnClickListener(this);
+		btn_spx2wave.setOnClickListener(this);
+		btn_playspx.setOnClickListener(this);
+		btn_record_spx.setOnClickListener(this);
+		btn_sixin_spx2wave.setOnClickListener(this);
+		btn_sixin_wave_play.setOnClickListener(this);
 	}
 
 	private void init() {
 		uiHandler = new UIHandler();
 	}
 
-	private Button.OnClickListener btn_record_wav_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.btn_record_wav:
-				AudioFileFunc.setRawFileName(WaveJoin.rawName);
-				AudioFileFunc.setWavFileName(WaveJoin.waveName);
-				break;
-			case R.id.btn_record_wav2:
-				AudioFileFunc.setRawFileName(WaveJoin.rawName2);
-				AudioFileFunc.setWavFileName(WaveJoin.waveName2);
-				break;
-			default:
-				break;
-			}
-			record(FLAG_WAV);
-		}
-	};
-	private Button.OnClickListener btn_play_raw_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					audioTrackPlay();
-				}
-			}).start();
-		}
-	};
-	private Button.OnClickListener btn_play_wav_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-
-			mediaPlayerPlay(WaveJoin.waveName);
-
-		}
-	};
-
-	private void audioTrackPlay() {
+	private void audioTrackPlay(String fileName) {
 		if (null != track) {
 			track.stop();
 			track.release();
@@ -136,11 +122,11 @@ public class MainActivity extends FragmentActivity {
 			}
 		}
 		try {
-			track = new AudioTrack(AudioManager.STREAM_MUSIC, AudioFileFunc.AUDIO_SAMPLE_RATE, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT, WaveJoin.bufferSizeInBytes,
+			track = new AudioTrack(AudioManager.STREAM_MUSIC, AudioFileFunc.AUDIO_SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, WaveJoin.bufferSizeInBytes,
 					AudioTrack.MODE_STREAM);
-			raf = new RandomAccessFile(AudioFileFunc.getFilePathByName(WaveJoin.rawName), "r");
+			raf = new RandomAccessFile(AudioFileFunc.getFilePathByName(fileName), "r");
 			raf.seek(0);
-			byte[] decoded = new byte[160];
+			byte[] decoded = new byte[320];
 			int length = 0;
 			while ((length = raf.read(decoded)) != -1) {
 				track.write(decoded, 0, length);
@@ -170,42 +156,6 @@ public class MainActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 	}
-
-	private Button.OnClickListener btn_record_amr_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			record(FLAG_AMR);
-		}
-	};
-	private Button.OnClickListener btn_stop_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			stop();
-		}
-	};
-	private Button.OnClickListener btn_join_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			join();
-		}
-	};
-	private Button.OnClickListener btn_wave_join_play_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			mediaPlayerPlay(WaveJoin.joinWaveName);
-		}
-	};
-	private Button.OnClickListener btn_wave2spx_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			waveSpeex.wave2spx();
-		}
-	};
-	private Button.OnClickListener btn_spx2wave_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			waveSpeex.spx2wav();
-		}
-	};
-	private Button.OnClickListener btn_playspx_clickListener = new Button.OnClickListener() {
-		public void onClick(View v) {
-			mediaPlayerPlay(WaveSpeex.decodedSpxNamewav);
-		}
-	};
 
 	/**
 	 * 音频拼接
@@ -268,6 +218,9 @@ public class MainActivity extends FragmentActivity {
 			case FLAG_AMR:
 				MediaRecordFunc mRecord_2 = MediaRecordFunc.getInstance();
 				mRecord_2.stopRecordAndFile();
+				break;
+			case FLAG_SPX:
+				SpeexTool.stop();
 				break;
 			}
 			if (uiThread != null) {
@@ -358,6 +311,78 @@ public class MainActivity extends FragmentActivity {
 				MainActivity.this.uiHandler.sendMessage(msg); // 向Handler发送消息,更新UI
 			}
 
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_record_wav:
+			AudioFileFunc.setRawFileName(WaveJoin.rawName);
+			AudioFileFunc.setWavFileName(WaveJoin.waveName);
+			record(FLAG_WAV);
+			break;
+		case R.id.btn_record_wav2:
+			AudioFileFunc.setRawFileName(WaveJoin.rawName2);
+			AudioFileFunc.setWavFileName(WaveJoin.waveName2);
+			record(FLAG_WAV);
+			break;
+		case R.id.btn_play_wav:
+			mediaPlayerPlay(WaveJoin.waveName);
+			break;
+		case R.id.btn_play_wav2:
+			mediaPlayerPlay(WaveJoin.waveName2);
+			break;
+		case R.id.btn_play_raw:
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					audioTrackPlay(WaveJoin.rawName);
+				}
+			}).start();
+			break;
+		case R.id.btn_play_raw2:
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					audioTrackPlay(WaveJoin.rawName2);
+				}
+			}).start();
+			break;
+		case R.id.btn_record_amr:
+			record(FLAG_AMR);
+			break;
+		case R.id.btn_stop:
+			stop();
+			break;
+		case R.id.btn_wave_join:
+			join();
+			break;
+		case R.id.btn_wave_join_play:
+			mediaPlayerPlay(WaveJoin.joinWaveName);
+			break;
+		case R.id.btn_wave2spx:
+			waveSpeex.wave2spx();
+			break;
+		case R.id.btn_spx2wave:
+			waveSpeex.spx2wav();
+			break;
+		case R.id.btn_playspx:
+			mediaPlayerPlay(WaveSpeex.decodedSpxNamewav);
+			break;
+		case R.id.btn_record_spx:
+			SpeexTool.start(AudioFileFunc.getFilePathByName(SpeexTool.fileName));
+			mState = FLAG_SPX;
+			break;
+		case R.id.btn_sixin_spx2wave:
+			SpeexTool.decodeSpx(MainActivity.this, AudioFileFunc.getFilePathByName(SpeexTool.fileName), AudioFileFunc.getFilePathByName(SpeexTool.dstName));
+			break;
+		case R.id.btn_sixin_wave_play:
+			mediaPlayerPlay(SpeexTool.dstName);
+			break;
+
+		default:
+			break;
 		}
 	}
 }

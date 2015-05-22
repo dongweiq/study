@@ -26,7 +26,7 @@ public class SpeexPlayer {
 				if (speexListener != null) {
 					speexListener.onCompletion(speexdec);
 				} else {
-					System.out.println("speexListener is null");
+					System.out.println("鍙镐俊---------null===speexListener");
 				}
 				break;
 			case speexplay_error:
@@ -77,7 +77,7 @@ public class SpeexPlayer {
 						throw new Exception(speexdec.getErrmsg());
 					}
 				}
-				System.out.println("RecordPlayThread  播放完成");
+				System.out.println("RecordPlayThread   鎾斁瀹屾垚");
 				if (isPlay) {
 					handler.sendEmptyMessage(speexplay_completion);
 				} else {
@@ -89,7 +89,7 @@ public class SpeexPlayer {
 				isPlay = false;
 			} catch (Exception t) {
 				t.printStackTrace();
-				System.out.println("RecordPlayThread   播放出错");
+				System.out.println("RecordPlayThread   鎾斁鍑洪敊");
 				speexdec.setPaused(true);
 				handler.sendEmptyMessage(speexplay_error);
 				isPlay = false;
@@ -98,7 +98,7 @@ public class SpeexPlayer {
 	}
 
 	/**
-	 * 结束播放
+	 * 缁撴潫鎾斁
 	 */
 	public void stopPlay() {
 		if (speexdec != null) {

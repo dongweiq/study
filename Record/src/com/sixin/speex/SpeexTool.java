@@ -2,23 +2,30 @@ package com.sixin.speex;
 
 import java.io.File;
 
+import com.honghe.record.AudioFileFunc;
+import com.honghe.record.WaveJoin;
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.AudioManager;
 
 public class SpeexTool {
-	//Â¼Òô
+	//å½•éŸ³
 	public static SpeexRecorder recorderInstance = null;
-	// SpeexÓïÒô²¥·Å
+	// Speexè¯­éŸ³æ’­æ”¾
 	public static SpeexPlayer mSpeexPlayer = null;
+	// Speexè¯­éŸ³è½¬æ¢
+	public static SpeexFileDecoderHelper mSpeexFileDecoderHelper = null;
+	public final static String fileName = "sixin.spx";
+	public final static String dstName = "sixin.wav";
 
 	/**
-	 * ¿ªÊ¼Â¼Òô
+	 * å¼€å§‹å½•éŸ³
 	 * 
-	 * @param name ÒôÆµ´æ·ÅÂ·¾¶
+	 * @param name éŸ³é¢‘å­˜æ”¾è·¯å¾„
 	 */
 	public static void start(String name) {
-		// speexÂ¼Òô
+		// speexå½•éŸ³
 		if (recorderInstance != null) {
 			recorderInstance.setRecording(false);
 			recorderInstance = null;
@@ -33,13 +40,13 @@ public class SpeexTool {
 	}
 
 	/**
-	 * Í£Ö¹Â¼Òô£¬²¢ÊÇ·ñÉ¾³ıÎÄ¼ş
+	 * åœæ­¢å½•éŸ³ï¼Œå¹¶æ˜¯å¦åˆ é™¤æ–‡ä»¶
 	 * 
 	 * @param del
 	 * @param filename
 	 */
 	public static void stop(boolean del, final String filename) {
-		// speexÂ¼Òô
+		// speexå½•éŸ³
 		stop();
 		if (del) {
 			new Thread((new Runnable() {
@@ -57,11 +64,11 @@ public class SpeexTool {
 	}
 
 	/**
-	 * Í£Ö¹Â¼Òô
+	 * åœæ­¢å½•éŸ³
 	 * 
 	 */
 	public static void stop() {
-		// speexÂ¼Òô
+		// speexå½•éŸ³
 		if (recorderInstance != null) {
 			recorderInstance.setRecording(false);
 			recorderInstance = null;
@@ -69,14 +76,14 @@ public class SpeexTool {
 	}
 
 	/**
-	 * ÓïÒô²¥·Å
+	 * è¯­éŸ³æ’­æ”¾
 	 * 
 	 * @param name
 	 * @param chatmsgid
 	 */
 	public static void playMusic(Context context, String name) {
 		try {
-			// Èç¹ûÊÇspeexÂ¼Òô
+			// å¦‚æœæ˜¯speexå½•éŸ³
 			if (name != null && name.endsWith(".spx")) {
 				if (mSpeexPlayer != null && mSpeexPlayer.isPlay) {
 					stopMusic(context);
@@ -85,18 +92,18 @@ public class SpeexTool {
 					mSpeexPlayer = new SpeexPlayer(name, new OnSpeexCompletionListener() {
 						@Override
 						public void onError(Exception ex) {
-							System.out.println("²¥·Å´íÎó");
+							System.out.println("æ’­æ”¾é”™è¯¯");
 						}
 
 						@Override
 						public void onCompletion(SpeexDecoder speexdecoder) {
-							System.out.println("²¥·ÅÍê³É");
+							System.out.println("æ’­æ”¾å®Œæˆ");
 						}
 					});
 					mSpeexPlayer.startPlay();
 				}
 			} else {
-				System.out.println("ÒôÆµÎÄ¼ş¸ñÊ½²»ÕıÈ·");
+				System.out.println("éŸ³é¢‘æ–‡ä»¶æ ¼å¼ä¸æ­£ç¡®");
 			}
 
 		} catch (Exception e) {
@@ -105,10 +112,50 @@ public class SpeexTool {
 	}
 
 	/**
-	 * Í£Ö¹²¥·ÅÓïÒô
+	 * è¯­éŸ³è½¬æ¢
+	 * 
+	 * @param name
+	 * @param srcFileName spxæ–‡ä»¶å
+	 * @param dstFileName è½¬æ¢åå¾—åˆ°æ–‡ä»¶çš„æ–‡ä»¶å
+	 */
+	public static void decodeSpx(Context context, String srcFileName, final String dstFileName) {
+		final String temppath = AudioFileFunc.getFilePathByName("temp.raw");
+		try {
+			// å¦‚æœæ˜¯speexå½•éŸ³
+			if (srcFileName != null && srcFileName.endsWith(".spx")) {
+				if (mSpeexFileDecoderHelper != null && mSpeexFileDecoderHelper.isDecoding) {
+					stopMusic(context);
+				} else {
+					muteAudioFocus(context, true);
+					mSpeexFileDecoderHelper = new SpeexFileDecoderHelper(srcFileName, temppath, new OnSpeexFileCompletionListener() {
+
+						@Override
+						public void onError(Exception ex) {
+							System.out.println("è½¬æ¢é”™è¯¯");
+						}
+
+						@Override
+						public void onCompletion(SpeexFileDecoder speexdecoder) {
+							System.out.println("è½¬æ¢å®Œæˆ");
+							WaveJoin.copyWaveFile(temppath, dstFileName);
+						}
+					});
+					mSpeexFileDecoderHelper.startDecode();
+				}
+			} else {
+				System.out.println("éŸ³é¢‘æ–‡ä»¶æ ¼å¼ä¸æ­£ç¡®");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * åœæ­¢æ’­æ”¾è¯­éŸ³
 	 */
 	public static void stopMusic(Context context) {
-		// Í£Ö¹²¥·ÅÂ¼Òô
+		// åœæ­¢æ’­æ”¾å½•éŸ³
 		if (mSpeexPlayer != null && mSpeexPlayer.isPlay) {
 			mSpeexPlayer.stopPlay();
 			mSpeexPlayer = null;
@@ -122,7 +169,7 @@ public class SpeexTool {
 			return false;
 		}
 		if (!isBeforeFroyo()) {
-			// 2.1ÒÔÏÂµÄ°æ±¾²»Ö§³ÖÏÂÃæµÄAPI£ºrequestAudioFocusºÍabandonAudioFocus
+			// 2.1ä»¥ä¸‹çš„ç‰ˆæœ¬ä¸æ”¯æŒä¸‹é¢çš„APIï¼šrequestAudioFocuså’ŒabandonAudioFocus
 
 			System.out.println("ANDROID_LAB Android 2.1 and below can not stop music");
 			return false;

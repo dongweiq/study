@@ -88,7 +88,7 @@ public class WaveJoin {
 		long totalAudioLen = 0;
 		long totalDataLen = totalAudioLen + 36;
 		long longSampleRate = AudioFileFunc.AUDIO_SAMPLE_RATE;
-		int channels = 2;
+		int channels = 1;
 		long byteRate = 16 * AudioFileFunc.AUDIO_SAMPLE_RATE * channels / 8;
 		byte[] data = new byte[bufferSizeInBytes];
 		try {

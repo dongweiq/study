@@ -52,7 +52,7 @@ public class SpeexWriteClient {
 		//sampleRate=5500;//Bee
 		vbr=true;
 		
-		//µ÷ÓÃOGG·â×°
+		//è°ƒç”¨OGGå°è£…
 		speexWriter = new OggSpeexWriter(mode, sampleRate, channels, nframes, vbr);
 
 		try {

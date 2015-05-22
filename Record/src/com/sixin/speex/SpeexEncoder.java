@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * ½«recorderÂ¼ÖÆµÄÉùÒôÊı¾İÁ÷×ªÂë£¬²¢½»¸øwriter·â×°
+ * å°†recorderå½•åˆ¶çš„å£°éŸ³æ•°æ®æµè½¬ç ï¼Œå¹¶äº¤ç»™writerå°è£…
  * 
  * @author Gauss
  * 
@@ -35,7 +35,7 @@ public class SpeexEncoder implements Runnable {
 
 	public void run() {
 
-		// Æô¶¯writerÏß³ÌĞ´speexÎÄ¼ş¡£
+		// å¯åŠ¨writerçº¿ç¨‹å†™speexæ–‡ä»¶ã€‚
 		SpeexWriter fileWriter = new SpeexWriter(fileName);
 		Thread consumerThread = new Thread((Runnable) fileWriter);
 		fileWriter.setRecording(true);
@@ -74,7 +74,7 @@ public class SpeexEncoder implements Runnable {
 	}
 
 	/**
-	 * ¹©Recorder·½´ı´¦ÀíµÄÊı¾İ
+	 * ä¾›Recorderæ–¹å¾…å¤„ç†çš„æ•°æ®
 	 * 
 	 * @param data
 	 * @param size

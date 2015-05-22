@@ -39,11 +39,28 @@
             android:text="raw播放" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_record_wav2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wav录音2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_record_wav2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wav录音2" />
+
+        <Button
+            android:id="@+id/btn_play_wav2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wav播放2" />
+
+        <Button
+            android:id="@+id/btn_play_raw2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="raw播放2" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_record_amr"
@@ -56,20 +73,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="停止录音" />
-<LinearLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    <Button
-        android:id="@+id/btn_wave_join"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wave音频拼接" />
-    <Button
-        android:id="@+id/btn_wave_join_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wave音频拼接后播放" />
-</LinearLayout>
+
+        <Button
+            android:id="@+id/btn_wave_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wave音频拼接" />
+
+        <Button
+            android:id="@+id/btn_wave_join_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wave音频拼接后播放" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_wave2spx"
         android:layout_width="wrap_content"
@@ -87,6 +108,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="播放转换后的wave" />
+
+    <Button
+        android:id="@+id/btn_record_spx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="司信录制spx" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_sixin_spx2wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="司信spx转wave" />
+
+        <Button
+            android:id="@+id/btn_sixin_wave_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放司信speex转换后的wave" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text"
