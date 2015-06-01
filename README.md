@@ -10,3 +10,7 @@ Mylocker是一个在老婆的要求下写的一个软件。
 SpeexLuYin是自己根据gauss的代码进行修改的一个使用speex库进行录音和播放的实例。以后的项目可以参考。
 
 testCordova是cordova的学习目录。
+
+
+有任何疑问请关注我的博客，可留言http://www.cnblogs.com/dongweiq/
+qq714094450
