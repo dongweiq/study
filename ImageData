@@ -1,0 +1,85 @@
+package com.justenjoy.util;
+
+import android.graphics.Bitmap;
+
+/**
+ * Created by 王洪贺 on 15/8/5.
+ */
+public class ImageData {
+	private Bitmap mBitmap;
+	private int[] pixels;
+	public int width;
+	public int height;
+	private int alpha = (0xFF << 24);
+
+	public ImageData(Bitmap bitmap) {
+		this.mBitmap = bitmap;
+		this.width = mBitmap.getWidth(); // 获取位图的宽
+		this.height = mBitmap.getHeight(); // 获取位图的高
+		this.pixels = new int[width * height];// 通过位图的大小创建像素点数组
+		mBitmap.getPixels(pixels, 0, width, 0, 0, width, height); // 根据宽高获取像素
+	}
+
+	/**
+	 * 获取某一个像素的R值
+	 * 
+	 * @param widthPx
+	 * @param heightPx
+	 * @return
+	 */
+	public int getRComponent(int widthPx, int heightPx) {
+		return (getRGB(widthPx, heightPx) & 0x00FF0000) >> 16;
+	}
+
+	/**
+	 * 获取某一个像素G的值
+	 * 
+	 * @param widthPx
+	 * @param heightPx
+	 * @return
+	 */
+	public int getGComponent(int widthPx, int heightPx) {
+		return (getRGB(widthPx, heightPx) & 0x0000FF00) >> 8;
+	}
+
+	/**
+	 * 获取某一个像素B的值
+	 * 
+	 * @param widthPx
+	 * @param heightPx
+	 * @return
+	 */
+	public int getBComponent(int widthPx, int heightPx) {
+		return (getRGB(widthPx, heightPx) & 0x000000FF);
+	}
+
+	public int getRGB(int widthPx, int heightPx) {
+		return pixels[width * heightPx + widthPx];
+	}
+
+	/**
+	 * 设置某一个像素的颜色
+	 * 
+	 * @param widthPx
+	 * @param heightPx
+	 * @param R
+	 * @param G
+	 * @param B
+	 */
+	public void setPixelColor(int widthPx, int heightPx, int R, int G, int B) {
+		pixels[width * heightPx + widthPx] = alpha | R << 16 | G << 8 | B;
+	}
+
+	/**
+	 * 获取改变后的bitmap图像
+	 * 
+	 * @return
+	 */
+	public Bitmap getBitmap() {
+		Bitmap bitmap = Bitmap.createBitmap(width, height,
+				Bitmap.Config.ARGB_8888);
+		bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+		mBitmap.recycle();
+		return bitmap;
+	}
+}
