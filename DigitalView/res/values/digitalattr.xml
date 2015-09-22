@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="textNumbers" format="string" />
+
+    <declare-styleable name="digitalView">
+        <attr name="textNumbers" />
+    </declare-styleable>
+
+</resources>
