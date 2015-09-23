@@ -6,6 +6,15 @@
     android:orientation="horizontal" >
 
     <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@drawable/minus217x324"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/imageView6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

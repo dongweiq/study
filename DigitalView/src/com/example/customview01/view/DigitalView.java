@@ -15,16 +15,16 @@ import android.widget.LinearLayout;
 
 public class DigitalView extends LinearLayout {
 	private ImageView imageView1, imageView2, imageView3, imageView4,
-			imageView5, imageView6;
+			imageView5, imageView6, imageView7;
 	private int[] images = { R.drawable.zero217x324, R.drawable.one217x324,
 			R.drawable.two217x324, R.drawable.three217x324,
 			R.drawable.four217x324, R.drawable.five217x324,
 			R.drawable.six217x324, R.drawable.seven217x324,
 			R.drawable.eight217x324, R.drawable.nine217x324,
-			R.drawable.blank217x324 };
-	private int six, five, four, three, two, one, numbers;
+			R.drawable.blank217x324, R.drawable.minus217x324 };
+	private int six, five, four, three, two, one, numbers, textColor;
 	private Drawable icon0, icon1, icon2, icon3, icon4, icon5, icon6, icon7,
-			icon8, icon9, icon10;
+			icon8, icon9, icon11;
 
 	public DigitalView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -45,7 +45,8 @@ public class DigitalView extends LinearLayout {
 			case R.styleable.digitalView_textNumbers:
 				numbers = a.getInt(attr, 1);
 				break;
-
+			case R.styleable.digitalView_textColor:
+				textColor = a.getColor(attr, Color.BLACK);
 			default:
 				break;
 			}
@@ -64,6 +65,7 @@ public class DigitalView extends LinearLayout {
 		imageView4 = (ImageView) findViewById(R.id.imageView4);
 		imageView5 = (ImageView) findViewById(R.id.imageView5);
 		imageView6 = (ImageView) findViewById(R.id.imageView6);
+		imageView7 = (ImageView) findViewById(R.id.imageView7);
 		icon0 = context.getResources().getDrawable(images[0]);
 		icon1 = context.getResources().getDrawable(images[1]);
 		icon2 = context.getResources().getDrawable(images[2]);
@@ -74,8 +76,9 @@ public class DigitalView extends LinearLayout {
 		icon7 = context.getResources().getDrawable(images[7]);
 		icon8 = context.getResources().getDrawable(images[8]);
 		icon9 = context.getResources().getDrawable(images[9]);
-		icon10 = context.getResources().getDrawable(images[10]);
+		icon11 = context.getResources().getDrawable(images[11]);
 		setNumbers(numbers);
+		setColor(textColor);
 	}
 
 	/**
@@ -95,6 +98,7 @@ public class DigitalView extends LinearLayout {
 		icon7 = tintDrawable(icon7, ColorStateList.valueOf(color));
 		icon8 = tintDrawable(icon8, ColorStateList.valueOf(color));
 		icon9 = tintDrawable(icon9, ColorStateList.valueOf(color));
+		icon11 = tintDrawable(icon11, ColorStateList.valueOf(color));
 	}
 
 	/**
@@ -163,6 +167,12 @@ public class DigitalView extends LinearLayout {
 	 * ∏≈ ˆ£∫…Ë÷√ ˝÷µ <br/>
 	 */
 	public void setValue(int value) {
+		if (value < 0) {
+			imageView7.setVisibility(View.VISIBLE);
+			value = -value;
+		} else {
+			imageView7.setVisibility(View.GONE);
+		}
 		six = value % 1000000 / 100000;
 		five = value % 100000 / 10000;
 		four = value % 10000 / 1000;
@@ -190,6 +200,13 @@ public class DigitalView extends LinearLayout {
 				}
 			}
 		}
+		imageView1.invalidate();
+		imageView2.invalidate();
+		imageView3.invalidate();
+		imageView4.invalidate();
+		imageView5.invalidate();
+		imageView6.invalidate();
+		imageView7.invalidate();
 	}
 
 	/**

@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 						@Override
 						public void run() {
-							digitalView.setValue(value);
+							digitalView.setValue(-value);
 						}
 					});
 					try {

@@ -18,7 +18,8 @@
         android:id="@+id/digitalView"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        custom:textNumbers="6" >
+        custom:textNumbers="6" 
+        custom:textColor="#00ff00">
     </com.example.customview01.view.DigitalView>
 
     <LinearLayout

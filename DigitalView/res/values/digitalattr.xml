@@ -2,9 +2,11 @@
 <resources>
 
     <attr name="textNumbers" format="string" />
+    <attr name="textColor" format="color" />
 
     <declare-styleable name="digitalView">
         <attr name="textNumbers" />
+        <attr name="textColor" />
     </declare-styleable>
 
 </resources>
